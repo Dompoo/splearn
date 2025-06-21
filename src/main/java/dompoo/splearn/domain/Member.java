@@ -12,15 +12,21 @@ import static org.springframework.util.Assert.state;
 public class Member {
 
   private final String email;
-  private final String nickname;
-  private final String passwordHash;
+  private String nickname;
+  private String passwordHash;
   private MemberStatus status;
 
-  public Member(String email, String nickname, String passwordHash) {
+  private Member(String email, String nickname, String passwordHash) {
     this.email = email;
     this.nickname = nickname;
     this.passwordHash = passwordHash;
     this.status = MemberStatus.PENDING;
+  }
+
+  public static Member create(String email, String nickname, String rawPassword, PasswordEncoder passwordEncoder) {
+    String passwordHash = passwordEncoder.encode(rawPassword);
+
+    return new Member(email, nickname, passwordHash);
   }
 
   public void activate() {
@@ -33,5 +39,17 @@ public class Member {
     state(status == MemberStatus.ACTIVE, "ACTIVE 상태가 아닙니다.");
 
     status = MemberStatus.DEACTIVATED;
+  }
+
+  public boolean verifyPassword(String rawPassword, PasswordEncoder passwordEncoder) {
+    return passwordEncoder.matches(rawPassword, passwordHash);
+  }
+
+  public void changeNickname(String newNickname) {
+    this.nickname = newNickname;
+  }
+
+  public void changePassword(String newRawPassword, PasswordEncoder passwordEncoder) {
+    this.passwordHash = passwordEncoder.encode(newRawPassword);
   }
 }
