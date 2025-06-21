@@ -9,5 +9,4 @@ class SplearnApplicationTests {
   @Test
   void contextLoads() {
   }
-
 }

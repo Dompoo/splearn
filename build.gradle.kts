@@ -2,6 +2,7 @@ plugins {
     java
     id("org.springframework.boot") version "3.5.3"
     id("io.spring.dependency-management") version "1.1.7"
+    id("com.github.spotbugs") version "6.2.0"
 }
 
 group = "dompoo"
@@ -44,6 +45,10 @@ dependencies {
     // test
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+}
+
+tasks.named("check") {
+    dependsOn(tasks.withType(com.github.spotbugs.snom.SpotBugsTask::class.java))
 }
 
 tasks.withType<Test> {

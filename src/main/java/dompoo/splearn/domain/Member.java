@@ -4,8 +4,6 @@ import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 
-import java.util.Objects;
-
 import static org.springframework.util.Assert.state;
 
 @Getter
@@ -19,9 +17,9 @@ public class Member {
   private MemberStatus status;
 
   public Member(String email, String nickname, String passwordHash) {
-    this.email = Objects.requireNonNull(email);
-    this.nickname = Objects.requireNonNull(nickname);
-    this.passwordHash = Objects.requireNonNull(passwordHash);
+    this.email = email;
+    this.nickname = nickname;
+    this.passwordHash = passwordHash;
     this.status = MemberStatus.PENDING;
   }
 

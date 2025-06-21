@@ -20,11 +20,6 @@ class MemberTest {
       assertThat(member).isNotNull();
       assertThat(member.status()).isEqualTo(MemberStatus.PENDING);
     }
-
-    @Test
-    void 속성_중_하나가_null이면_예외가_발생한다() {
-      assertThatThrownBy(() -> new Member(null, "dompoo", "secret"));
-    }
   }
 
   @Nested
