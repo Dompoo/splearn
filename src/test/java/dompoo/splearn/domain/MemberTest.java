@@ -1,6 +1,5 @@
 package dompoo.splearn.domain;
 
-import dompoo.splearn.test_util.FakePasswordEncoder;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -10,13 +9,11 @@ import static org.assertj.core.api.Assertions.*;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class MemberTest {
 
-  PasswordEncoder passwordEncoder;
   Member member;
 
   @BeforeEach
   void setUp() {
-    this.passwordEncoder = new FakePasswordEncoder();
-    this.member = Member.create("dompoo@email.com", "dompoo", "secret", passwordEncoder);
+    this.member = Member.create("dompoo@email.com", "dompoo", "secret");
   }
 
   @Nested
@@ -30,7 +27,7 @@ class MemberTest {
     @ParameterizedTest
     @ValueSource(strings = {"wrong@email", "wrong.com", "wrong"})
     void 올바르지_않은_이메일_형식이면_예외가_발생한다(String invalidEmailValue) {
-      assertThatThrownBy(() -> Member.create(invalidEmailValue, "dompoo", "secret", passwordEncoder))
+      assertThatThrownBy(() -> Member.create(invalidEmailValue, "dompoo", "secret"))
           .isInstanceOf(IllegalArgumentException.class);
     }
   }
@@ -81,8 +78,8 @@ class MemberTest {
 
   @Test
   void 비밀번호를_검증한다() {
-    assertThat(member.verifyPassword("secret", passwordEncoder)).isTrue();
-    assertThat(member.verifyPassword("incorrect", passwordEncoder)).isFalse();
+    assertThat(member.isPasswordCorrect("secret")).isTrue();
+    assertThat(member.isPasswordCorrect("incorrect")).isFalse();
   }
 
   @Test
@@ -96,8 +93,8 @@ class MemberTest {
 
   @Test
   void 비밀번호를_변경한다() {
-    member.changePassword("verysecret", passwordEncoder);
+    member.changePassword("verysecret");
 
-    assertThat(member.verifyPassword("verysecret", passwordEncoder)).isTrue();
+    assertThat(member.isPasswordCorrect("verysecret")).isTrue();
   }
 }

@@ -13,21 +13,21 @@ public class Member {
 
   private final Email email;
   private String nickname;
-  private String passwordHash;
+  private Password password;
   private MemberStatus status;
 
-  private Member(Email email, String nickname, String passwordHash) {
+  private Member(Email email, String nickname, Password password) {
     this.email = email;
     this.nickname = nickname;
-    this.passwordHash = passwordHash;
+    this.password = password;
     this.status = MemberStatus.PENDING;
   }
 
-  public static Member create(String emailValue, String nickname, String rawPassword, PasswordEncoder passwordEncoder) {
-    String passwordHash = passwordEncoder.encode(rawPassword);
+  public static Member create(String emailValue, String nickname, String rawPassword) {
     Email email = new Email(emailValue);
+    Password password = Password.encode(rawPassword);
 
-    return new Member(email, nickname, passwordHash);
+    return new Member(email, nickname, password);
   }
 
   public void activate() {
@@ -42,15 +42,15 @@ public class Member {
     status = MemberStatus.DEACTIVATED;
   }
 
-  public boolean verifyPassword(String rawPassword, PasswordEncoder passwordEncoder) {
-    return passwordEncoder.matches(rawPassword, passwordHash);
+  public boolean isPasswordCorrect(String rawPassword) {
+    return password.matches(rawPassword);
   }
 
   public void changeNickname(String newNickname) {
     this.nickname = newNickname;
   }
 
-  public void changePassword(String newRawPassword, PasswordEncoder passwordEncoder) {
-    this.passwordHash = passwordEncoder.encode(newRawPassword);
+  public void changePassword(String newRawPassword) {
+    this.password = Password.encode(newRawPassword);
   }
 }
