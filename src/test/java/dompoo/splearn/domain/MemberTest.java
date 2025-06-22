@@ -2,6 +2,8 @@ package dompoo.splearn.domain;
 
 import dompoo.splearn.test_util.FakePasswordEncoder;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -23,6 +25,13 @@ class MemberTest {
     @Test
     void 멤버를_생성하면_가입_대기_상태이다() {
       assertThat(member.status()).isEqualTo(MemberStatus.PENDING);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"wrong@email", "wrong.com", "wrong"})
+    void 올바르지_않은_이메일_형식이면_예외가_발생한다(String invalidEmailValue) {
+      assertThatThrownBy(() -> Member.create(invalidEmailValue, "dompoo", "secret", passwordEncoder))
+          .isInstanceOf(IllegalArgumentException.class);
     }
   }
 

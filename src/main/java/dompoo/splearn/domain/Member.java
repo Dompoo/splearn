@@ -11,20 +11,21 @@ import static org.springframework.util.Assert.state;
 @ToString
 public class Member {
 
-  private final String email;
+  private final Email email;
   private String nickname;
   private String passwordHash;
   private MemberStatus status;
 
-  private Member(String email, String nickname, String passwordHash) {
+  private Member(Email email, String nickname, String passwordHash) {
     this.email = email;
     this.nickname = nickname;
     this.passwordHash = passwordHash;
     this.status = MemberStatus.PENDING;
   }
 
-  public static Member create(String email, String nickname, String rawPassword, PasswordEncoder passwordEncoder) {
+  public static Member create(String emailValue, String nickname, String rawPassword, PasswordEncoder passwordEncoder) {
     String passwordHash = passwordEncoder.encode(rawPassword);
+    Email email = new Email(emailValue);
 
     return new Member(email, nickname, passwordHash);
   }
