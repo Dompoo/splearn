@@ -1,0 +1,24 @@
+package dompoo.splearn.application;
+
+import dompoo.splearn.application.provided.MemberRegister;
+import dompoo.splearn.application.required.EmailSender;
+import dompoo.splearn.application.required.MemberRepository;
+import dompoo.splearn.domain.Member;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+public class MemberService implements MemberRegister {
+
+  private final MemberRepository memberRepository;
+  private final EmailSender emailSender;
+
+  @Override
+  public Member register(String email, String nickname, String rawPassword) {
+    Member member = Member.create(email, nickname, rawPassword);
+    memberRepository.save(member);
+    emailSender.send(member.email(), "등록을 완료해주세요.", "아래 링크를 클릭해서 등록을 완료해주세요.");
+    return member;
+  }
+}
