@@ -1,19 +1,34 @@
 package dompoo.splearn.domain;
 
+import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 
 import static org.springframework.util.Assert.state;
 
+@Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Accessors(fluent = true)
 @ToString
 public class Member {
 
-  private final Email email;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
+
+  @Embedded
+  private Email email;
+
   private String nickname;
+
+  @Embedded
   private Password password;
+
+  @Enumerated(EnumType.STRING)
   private MemberStatus status;
 
   private Member(Email email, String nickname, Password password) {

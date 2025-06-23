@@ -1,9 +1,12 @@
 package dompoo.splearn.domain;
 
+import jakarta.persistence.Embeddable;
+
 import java.util.regex.Pattern;
 
 import static org.springframework.util.Assert.isTrue;
 
+@Embeddable
 public record Email(
     String address
 ) {
