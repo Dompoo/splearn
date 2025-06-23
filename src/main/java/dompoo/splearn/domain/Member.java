@@ -6,10 +6,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Accessors;
+import org.hibernate.annotations.NaturalId;
 
 import static org.springframework.util.Assert.state;
 
 @Entity
+//@NaturalIdCache
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Accessors(fluent = true)
@@ -21,6 +23,7 @@ public class Member {
   private Long id;
 
   @Embedded
+  @NaturalId
   private Email email;
 
   private String nickname;
