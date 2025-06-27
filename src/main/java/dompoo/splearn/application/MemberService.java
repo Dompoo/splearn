@@ -17,8 +17,8 @@ public class MemberService implements MemberRegister {
   @Override
   public Member register(String email, String nickname, String rawPassword) {
     Member member = Member.create(email, nickname, rawPassword);
-    memberRepository.save(member);
+    Member savedMember = memberRepository.save(member);
     emailSender.send(member.email(), "등록을 완료해주세요.", "아래 링크를 클릭해서 등록을 완료해주세요.");
-    return member;
+    return savedMember;
   }
 }
