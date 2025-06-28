@@ -1,28 +1,22 @@
 package dompoo.splearn.application.required;
 
 import dompoo.splearn.test_util.MemberFixture;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
+import dompoo.splearn.test_util.PersistenceTest;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.dao.DataIntegrityViolationException;
 
 import static org.assertj.core.api.Assertions.*;
 
-@DataJpaTest
-class MemberRepositoryTest {
+class MemberRepositoryTest extends PersistenceTest {
 
   @Autowired
   MemberRepository memberRepository;
 
-  @PersistenceContext
-  EntityManager em;
-
   @Nested
   class 저장_테스트 {
-    
+
     @Test
     void 멤버를_저장한다() {
       var member = MemberFixture.createAny();

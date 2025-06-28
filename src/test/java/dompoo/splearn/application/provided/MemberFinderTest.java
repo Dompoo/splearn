@@ -1,17 +1,17 @@
 package dompoo.splearn.application.provided;
 
-import dompoo.splearn.test_util.SplearnIntegrationTest;
+import dompoo.splearn.test_util.IntegrationTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.assertj.core.api.Assertions.*;
 
-class MemberFinderTest extends SplearnIntegrationTest {
+class MemberFinderTest extends IntegrationTest {
 
   @Autowired
-  MemberRegister memberRegister;
+  MemberFinder memberFinder;
   @Autowired
-  MemberFinder sut;
+  MemberRegister memberRegister;
 
   @Test
   void 멤버를_조회한다() {
@@ -19,7 +19,7 @@ class MemberFinderTest extends SplearnIntegrationTest {
     em.flush();
     em.clear();
 
-    var findMember = sut.find(member.id());
+    var findMember = memberFinder.find(member.id());
 
     assertThat(findMember.id()).isEqualTo(member.id());
   }
@@ -30,7 +30,7 @@ class MemberFinderTest extends SplearnIntegrationTest {
     em.flush();
     em.clear();
 
-    assertThatThrownBy(() -> sut.find(member.id() + 1))
+    assertThatThrownBy(() -> memberFinder.find(member.id() + 1))
         .isInstanceOf(IllegalArgumentException.class);
   }
 }
