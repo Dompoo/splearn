@@ -3,6 +3,7 @@ package dompoo.splearn.application.provided;
 import dompoo.splearn.domain.DuplicatedEmailException;
 import dompoo.splearn.domain.MemberStatus;
 import dompoo.splearn.test_util.SplearnTestConfig;
+import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -33,5 +34,11 @@ class MemberRegisterTest {
 
     assertThatThrownBy(() -> sut.register("same@email.com", "dompoo", "secret"))
         .isInstanceOf(DuplicatedEmailException.class);
+  }
+
+  @Test
+  void 닉네임이_비어있으면_예외가_발생한다() {
+    assertThatThrownBy(() -> sut.register("dompoo@email.com", "  ", "secret"))
+        .isInstanceOf(ConstraintViolationException.class);
   }
 }

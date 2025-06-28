@@ -7,8 +7,11 @@ import dompoo.splearn.domain.DuplicatedEmailException;
 import dompoo.splearn.domain.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 @Service
+@Validated
 @RequiredArgsConstructor
 public class MemberService implements MemberRegister {
 
@@ -16,6 +19,7 @@ public class MemberService implements MemberRegister {
   private final EmailSender emailSender;
 
   @Override
+  @Transactional
   public Member register(String email, String nickname, String rawPassword) {
     validateEmailNotDuplicated(email);
     Member member = Member.create(email, nickname, rawPassword);
