@@ -2,23 +2,21 @@ package dompoo.splearn.application.provided;
 
 import dompoo.splearn.domain.DuplicatedEmailException;
 import dompoo.splearn.domain.MemberStatus;
-import dompoo.splearn.test_util.SplearnTestConfig;
+import dompoo.splearn.test_util.SplearnIntegrationTest;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.*;
 
-@SpringBootTest
-@Transactional
-@Import(SplearnTestConfig.class)
-class MemberRegisterTest {
+class MemberRegisterTest extends SplearnIntegrationTest {
 
   @Autowired
   MemberRegister sut;
+  @PersistenceContext
+  EntityManager em;
 
   @Test
   void 멤버를_등록한다() {
@@ -40,5 +38,16 @@ class MemberRegisterTest {
   void 닉네임이_비어있으면_예외가_발생한다() {
     assertThatThrownBy(() -> sut.register("dompoo@email.com", "  ", "secret"))
         .isInstanceOf(ConstraintViolationException.class);
+  }
+
+  @Test
+  void 멤버를_activate_한다() {
+    var member = sut.register("dompoo@email.com", "dompoo", "secret");
+    em.flush();
+    em.clear();
+
+    var activatedMember = sut.activate(member.id());
+
+    assertThat(activatedMember.status()).isEqualTo(MemberStatus.ACTIVE);
   }
 }
