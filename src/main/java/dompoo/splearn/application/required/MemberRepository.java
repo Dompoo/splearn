@@ -1,6 +1,6 @@
 package dompoo.splearn.application.required;
 
-import dompoo.splearn.domain.Member;
+import dompoo.splearn.domain.member.Member;
 import org.springframework.data.repository.Repository;
 
 import java.util.Optional;

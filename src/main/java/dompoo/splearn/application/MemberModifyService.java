@@ -4,8 +4,8 @@ import dompoo.splearn.application.provided.MemberFinder;
 import dompoo.splearn.application.provided.MemberRegister;
 import dompoo.splearn.application.required.EmailSender;
 import dompoo.splearn.application.required.MemberRepository;
-import dompoo.splearn.domain.DuplicatedEmailException;
-import dompoo.splearn.domain.Member;
+import dompoo.splearn.domain.member.DuplicatedEmailException;
+import dompoo.splearn.domain.member.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,9 +22,9 @@ public class MemberModifyService implements MemberRegister {
 
   @Override
   @Transactional
-  public Member register(String email, String nickname, String rawPassword) {
+  public Member register(String email, String nickname, String rawPassword, String profile, String introduction) {
     validateEmailNotDuplicated(email);
-    Member member = Member.create(email, nickname, rawPassword);
+    Member member = Member.create(email, nickname, rawPassword, profile, introduction);
     Member savedMember = memberRepository.save(member);
     sendWelcomeEmail(member);
     return savedMember;

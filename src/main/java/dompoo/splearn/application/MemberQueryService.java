@@ -2,7 +2,7 @@ package dompoo.splearn.application;
 
 import dompoo.splearn.application.provided.MemberFinder;
 import dompoo.splearn.application.required.MemberRepository;
-import dompoo.splearn.domain.Member;
+import dompoo.splearn.domain.member.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

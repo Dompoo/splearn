@@ -1,6 +1,6 @@
 package dompoo.splearn.application.required;
 
-import dompoo.splearn.domain.Email;
+import dompoo.splearn.domain.member.Email;
 
 public interface EmailSender {
 

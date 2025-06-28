@@ -1,4 +1,4 @@
-package dompoo.splearn.domain;
+package dompoo.splearn.domain.member;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -21,31 +21,36 @@ public class Member {
   private String nickname;
   private Password password;
   private MemberStatus status;
+  private MemberDetail detail;
 
-  private Member(Email email, String nickname, Password password) {
+  private Member(Email email, String nickname, Password password, MemberDetail memberDetail) {
     this.email = email;
     this.nickname = nickname;
     this.password = password;
     this.status = MemberStatus.PENDING;
+    this.detail = memberDetail;
   }
 
-  public static Member create(String emailValue, String nickname, String rawPassword) {
+  public static Member create(String emailValue, String nickname, String rawPassword, String profile, String introduction) {
     Email email = new Email(emailValue);
     Password password = Password.encode(rawPassword);
+    MemberDetail detail = new MemberDetail(profile, introduction);
 
-    return new Member(email, nickname, password);
+    return new Member(email, nickname, password, detail);
   }
 
   public void activate() {
     state(status == MemberStatus.PENDING, "PENDING 상태가 아닙니다.");
 
     status = MemberStatus.ACTIVE;
+    detail.updateActivatedTimeToNow();
   }
 
   public void deactivate() {
     state(status == MemberStatus.ACTIVE, "ACTIVE 상태가 아닙니다.");
 
     status = MemberStatus.DEACTIVATED;
+    detail.updateDeactivatedTimeToNow();
   }
 
   public boolean isPasswordCorrect(String rawPassword) {

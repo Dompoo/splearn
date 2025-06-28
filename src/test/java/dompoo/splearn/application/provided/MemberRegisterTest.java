@@ -1,7 +1,7 @@
 package dompoo.splearn.application.provided;
 
-import dompoo.splearn.domain.DuplicatedEmailException;
-import dompoo.splearn.domain.MemberStatus;
+import dompoo.splearn.domain.member.DuplicatedEmailException;
+import dompoo.splearn.domain.member.MemberStatus;
 import dompoo.splearn.test_util.IntegrationTest;
 import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.Test;

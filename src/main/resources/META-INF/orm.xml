@@ -7,7 +7,7 @@
 
     <access>FIELD</access>
 
-    <entity class="dompoo.splearn.domain.Member">
+    <entity class="dompoo.splearn.domain.member.Member">
         <table name="MEMBER">
             <unique-constraint name="UK_MEMBER_EMAIL">
                 <column-name>email</column-name>
@@ -29,7 +29,7 @@
         </attributes>
     </entity>
 
-    <embeddable class="dompoo.splearn.domain.Email">
+    <embeddable class="dompoo.splearn.domain.member.Email">
         <attributes>
             <basic name="address">
                 <column name="email" length="50" nullable="false"/>
@@ -37,7 +37,7 @@
         </attributes>
     </embeddable>
 
-    <embeddable class="dompoo.splearn.domain.Password">
+    <embeddable class="dompoo.splearn.domain.member.Password">
         <attributes>
             <basic name="hashValue">
                 <column name="password_hash" nullable="false"/>

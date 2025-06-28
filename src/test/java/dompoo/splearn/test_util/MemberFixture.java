@@ -1,6 +1,6 @@
 package dompoo.splearn.test_util;
 
-import dompoo.splearn.domain.Member;
+import dompoo.splearn.domain.member.Member;
 import org.springframework.test.util.ReflectionTestUtils;
 
 public class MemberFixture {

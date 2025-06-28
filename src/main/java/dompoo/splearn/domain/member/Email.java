@@ -1,4 +1,4 @@
-package dompoo.splearn.domain;
+package dompoo.splearn.domain.member;
 
 import java.util.regex.Pattern;
 

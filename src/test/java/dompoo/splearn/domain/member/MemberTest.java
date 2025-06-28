@@ -1,4 +1,4 @@
-package dompoo.splearn.domain;
+package dompoo.splearn.domain.member;
 
 import dompoo.splearn.test_util.MemberFixture;
 import org.junit.jupiter.api.DisplayNameGeneration;
