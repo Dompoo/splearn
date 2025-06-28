@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 
+import java.util.Objects;
+
 import static org.springframework.util.Assert.state;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -56,5 +58,19 @@ public class Member {
 
   public void changePassword(String newRawPassword) {
     this.password = Password.encode(newRawPassword);
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) return true;
+    if (obj == null) return false;
+    if (!(obj instanceof Member other)) return false;
+
+    return id != null && Objects.equals(id, other.id);
+  }
+
+  @Override
+  public int hashCode() {
+    return getClass().hashCode();
   }
 }
