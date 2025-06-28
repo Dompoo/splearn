@@ -1,8 +1,9 @@
 package dompoo.splearn.application.provided;
 
 import dompoo.splearn.domain.Member;
+import org.springframework.lang.NonNull;
 
 public interface MemberFinder {
-  
-  Member find(Long memberId);
+
+  Member find(@NonNull Long memberId);
 }

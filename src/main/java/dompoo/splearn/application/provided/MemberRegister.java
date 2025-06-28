@@ -13,7 +13,5 @@ public interface MemberRegister {
       @NotBlank String rawPassword
   );
 
-  Member activate(
-      @NonNull Long memberId
-  );
+  Member activate(@NonNull Long memberId);
 }

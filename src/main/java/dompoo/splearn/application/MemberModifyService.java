@@ -14,8 +14,9 @@ import org.springframework.validation.annotation.Validated;
 @Service
 @Validated
 @RequiredArgsConstructor
-public class MemberService implements MemberRegister, MemberFinder {
+public class MemberModifyService implements MemberRegister {
 
+  private final MemberFinder memberFinder;
   private final MemberRepository memberRepository;
   private final EmailSender emailSender;
 
@@ -32,7 +33,7 @@ public class MemberService implements MemberRegister, MemberFinder {
   @Override
   @Transactional
   public Member activate(Long memberId) {
-    Member member = memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("회원을 찾을 수 없습니다. id: " + memberId));
+    Member member = memberFinder.find(memberId);
     member.activate();
     return memberRepository.save(member);
   }
@@ -45,10 +46,5 @@ public class MemberService implements MemberRegister, MemberFinder {
 
   private void sendWelcomeEmail(Member member) {
     emailSender.send(member.email(), "등록을 완료해주세요.", "아래 링크를 클릭해서 등록을 완료해주세요.");
-  }
-
-  @Override
-  public Member find(Long memberId) {
-    return memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("회원을 찾을 수 없습니다. id: " + memberId));
   }
 }
