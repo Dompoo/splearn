@@ -59,4 +59,9 @@ tasks.named("check") {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+    jvmArgs(
+        "--add-opens=java.base/java.lang=ALL-UNNAMED",
+        "--add-opens=java.base/java.util=ALL-UNNAMED",
+        "-javaagent:${classpath.find { it.name.contains("mockito-core") }?.absolutePath}"
+    )
 }
