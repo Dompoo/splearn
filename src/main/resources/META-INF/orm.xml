@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="https://jakarta.ee/xml/ns/persistence/orm"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence/orm
+                 https://jakarta.ee/xml/ns/persistence/orm/orm_3_1.xsd"
+                 version="3.1">
+
+    <access>FIELD</access>
+
+    <entity class="dompoo.splearn.domain.Member">
+        <table name="MEMBER">
+            <unique-constraint name="UK_MEMBER_EMAIL">
+                <column-name>email</column-name>
+            </unique-constraint>
+        </table>
+        <attributes>
+            <id name="id">
+                <generated-value strategy="IDENTITY"/>
+            </id>
+            <basic name="nickname">
+                <column length="50" nullable="false"/>
+            </basic>
+            <basic name="status">
+                <column nullable="false"/>
+                <enumerated>STRING</enumerated>
+            </basic>
+            <embedded name="email"/>
+            <embedded name="password"/>
+        </attributes>
+    </entity>
+
+    <embeddable class="dompoo.splearn.domain.Email">
+        <attributes>
+            <basic name="address">
+                <column name="email" length="50" nullable="false"/>
+            </basic>
+        </attributes>
+    </embeddable>
+
+    <embeddable class="dompoo.splearn.domain.Password">
+        <attributes>
+            <basic name="hashValue">
+                <column name="password_hash" nullable="false"/>
+            </basic>
+        </attributes>
+    </embeddable>
+
+</entity-mappings>
