@@ -11,7 +11,9 @@ import org.hibernate.annotations.NaturalId;
 import static org.springframework.util.Assert.state;
 
 @Entity
-//@NaturalIdCache
+@Table(uniqueConstraints = {
+    @UniqueConstraint(name = "UK_MEMBER_EMAIL", columnNames = {"email"})
+})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Accessors(fluent = true)
@@ -26,12 +28,14 @@ public class Member {
   @NaturalId
   private Email email;
 
+  @Column(length = 50, nullable = false)
   private String nickname;
 
   @Embedded
   private Password password;
 
   @Enumerated(EnumType.STRING)
+  @Column(nullable = false)
   private MemberStatus status;
 
   private Member(Email email, String nickname, Password password) {
