@@ -41,6 +41,7 @@ class MemberTest {
       member.activate();
 
       assertThat(member.status()).isEqualTo(MemberStatus.ACTIVE);
+      assertThat(member.detail().activatedAt()).isNotNull();
     }
 
     @Test
@@ -65,6 +66,7 @@ class MemberTest {
       member.deactivate();
 
       assertThat(member.status()).isEqualTo(MemberStatus.DEACTIVATED);
+      assertThat(member.detail().deactivatedAt()).isNotNull();
     }
 
     @Test

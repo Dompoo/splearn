@@ -30,13 +30,13 @@ public class MemberDetail {
     this.createdAt = LocalDateTime.now();
   }
 
-  public void updateActivatedTimeToNow() {
+  public void initActivatedTimeToNow() {
     state(activatedAt == null, "activatedAt은 null 이어야 합니다.");
 
     activatedAt = LocalDateTime.now();
   }
 
-  public void updateDeactivatedTimeToNow() {
+  public void initDeactivatedTimeToNow() {
     state(deactivatedAt == null, "deactivatedAt은 null 이어야 합니다.");
 
     deactivatedAt = LocalDateTime.now();

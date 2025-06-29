@@ -29,6 +29,20 @@ class MemberRepositoryTest extends PersistenceTest {
     }
 
     @Test
+    void 멤버를_저장하면_멤버상세도_같이_저장된다() {
+      var member = MemberFixture.createAny();
+      memberRepository.save(member);
+      em.flush();
+      em.clear();
+
+      var findMember = memberRepository.findById(member.id()).orElseThrow();
+
+      assertThat(findMember).isNotNull();
+      assertThat(findMember.detail()).isNotNull();
+      assertThat(findMember.detail().createdAt()).isNotNull();
+    }
+
+    @Test
     void 멤버를_저장할_때_이메일이_중복되면_예외가_발생한다() {
       var member1 = MemberFixture.createAny();
       var member2 = MemberFixture.createAny();

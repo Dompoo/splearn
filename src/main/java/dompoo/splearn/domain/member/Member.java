@@ -43,14 +43,14 @@ public class Member {
     state(status == MemberStatus.PENDING, "PENDING 상태가 아닙니다.");
 
     status = MemberStatus.ACTIVE;
-    detail.updateActivatedTimeToNow();
+    detail.initActivatedTimeToNow();
   }
 
   public void deactivate() {
     state(status == MemberStatus.ACTIVE, "ACTIVE 상태가 아닙니다.");
 
     status = MemberStatus.DEACTIVATED;
-    detail.updateDeactivatedTimeToNow();
+    detail.initDeactivatedTimeToNow();
   }
 
   public boolean isPasswordCorrect(String rawPassword) {
