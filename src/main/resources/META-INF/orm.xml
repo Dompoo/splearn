@@ -39,9 +39,6 @@
             <id name="id">
                 <generated-value strategy="IDENTITY"/>
             </id>
-            <basic name="profile">
-                <column nullable="false"/>
-            </basic>
             <basic name="introduction">
                 <column nullable="false"/>
             </basic>
@@ -52,6 +49,7 @@
             </basic>
             <basic name="deactivatedAt">
             </basic>
+            <embedded name="profile"/>
         </attributes>
     </entity>
 
@@ -67,6 +65,14 @@
         <attributes>
             <basic name="hashValue">
                 <column name="password_hash" nullable="false"/>
+            </basic>
+        </attributes>
+    </embeddable>
+
+    <embeddable class="dompoo.splearn.domain.member.Profile">
+        <attributes>
+            <basic name="address">
+                <column name="profile" length="15" nullable="false"/>
             </basic>
         </attributes>
     </embeddable>

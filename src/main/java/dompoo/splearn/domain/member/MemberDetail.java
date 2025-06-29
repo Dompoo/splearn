@@ -18,14 +18,14 @@ import static org.springframework.util.Assert.state;
 public class MemberDetail {
 
   private Long id;
-  private String profile;
+  private Profile profile;
   private String introduction;
   private LocalDateTime createdAt;
   private LocalDateTime activatedAt;
   private LocalDateTime deactivatedAt;
 
-  MemberDetail(String profile, String introduction) {
-    this.profile = profile;
+  MemberDetail(String profileAddress, String introduction) {
+    this.profile = new Profile(profileAddress);
     this.introduction = introduction;
     this.createdAt = LocalDateTime.now();
   }
