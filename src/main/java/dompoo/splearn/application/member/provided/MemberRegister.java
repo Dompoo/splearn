@@ -16,4 +16,10 @@ public interface MemberRegister {
   );
 
   Member activate(@NonNull Long memberId);
+
+  Member changeDetail(
+      @NonNull Long memberId,
+      String profileAddress,
+      String introduction
+  );
 }

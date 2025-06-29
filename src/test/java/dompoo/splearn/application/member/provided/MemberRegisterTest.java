@@ -1,9 +1,11 @@
 package dompoo.splearn.application.member.provided;
 
 import dompoo.splearn.domain.member.DuplicatedEmailException;
+import dompoo.splearn.domain.member.DuplicatedProfileException;
 import dompoo.splearn.domain.member.MemberStatus;
 import dompoo.splearn.test_util.IntegrationTest;
 import jakarta.validation.ConstraintViolationException;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -45,5 +47,47 @@ class MemberRegisterTest extends IntegrationTest {
     var activatedMember = memberRegister.activate(member.id());
 
     assertThat(activatedMember.status()).isEqualTo(MemberStatus.ACTIVE);
+  }
+
+  @Nested
+  class 상세_정보_수정_테스트 {
+
+    @Test
+    void 멤버의_상세_정보를_수정한다() {
+      var member = memberRegister.register("dompoo@email.com", "dompoo", "secret", "profile", "introduction");
+      memberRegister.activate(member.id());
+      em.flush();
+      em.clear();
+
+      var changedMember = memberRegister.changeDetail(member.id(), "newProfile", "newIntroduction");
+
+      assertThat(changedMember.profileAddress()).isEqualTo("newProfile");
+      assertThat(changedMember.introduction()).isEqualTo("newIntroduction");
+    }
+
+    @Test
+    void 수정_정보가_지정되지_않으면_변경되지_않는다() {
+      var member = memberRegister.register("dompoo@email.com", "dompoo", "secret", "profile", "introduction");
+      memberRegister.activate(member.id());
+      em.flush();
+      em.clear();
+
+      var changedMember = memberRegister.changeDetail(member.id(), null, "  ");
+
+      assertThat(changedMember.profileAddress()).isEqualTo("profile");
+      assertThat(changedMember.introduction()).isEqualTo("introduction");
+    }
+
+    @Test
+    void 이미_등록된_프로필_주소이면_예외가_발생한다() {
+      var member = memberRegister.register("dompoo@email.com", "dompoo", "secret", "profile", "introduction");
+      memberRegister.register("song@email.com", "song", "secret", "songProfile", "introduction");
+      memberRegister.activate(member.id());
+      em.flush();
+      em.clear();
+
+      assertThatThrownBy(() -> memberRegister.changeDetail(member.id(), "songProfile", ""))
+          .isInstanceOf(DuplicatedProfileException.class);
+    }
   }
 }

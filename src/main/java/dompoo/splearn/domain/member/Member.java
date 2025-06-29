@@ -71,6 +71,14 @@ public class Member {
     this.password = Password.encode(newRawPassword);
   }
 
+  public String profileAddress() {
+    return this.detail.profile().address();
+  }
+
+  public String introduction() {
+    return this.detail.introduction();
+  }
+
   @Override
   public boolean equals(Object obj) {
     if (this == obj) return true;

@@ -13,5 +13,7 @@ public interface MemberRepository extends Repository<Member, Long> {
 
   boolean existsByEmail_Address(String emailAddress);
 
-  boolean existsByDetailProfile_Address(String detailAddress);
+  boolean existsByDetail_Profile_Address(String emailAddress);
+
+  Optional<Member> findByDetail_Profile_Address(String profileAddress);
 }

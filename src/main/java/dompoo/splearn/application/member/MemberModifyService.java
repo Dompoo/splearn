@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
+import java.util.Optional;
+
 @Service
 @Validated
 @RequiredArgsConstructor
@@ -25,15 +27,15 @@ public class MemberModifyService implements MemberRegister {
   @Transactional
   public Member register(String email, String nickname, String rawPassword, String profileAddress, String introduction) {
     validateEmailNotDuplicated(email);
-    validateProfileAddressNotDuplicated(profileAddress);
+    validateProfileAddressNotDuplicatedExceptTarget(profileAddress);
     Member member = Member.create(email, nickname, rawPassword, profileAddress, introduction);
     Member savedMember = memberRepository.save(member);
     sendWelcomeEmail(member);
     return savedMember;
   }
 
-  private void validateProfileAddressNotDuplicated(String profileAddress) {
-    if (memberRepository.existsByDetailProfile_Address(profileAddress)) {
+  private void validateProfileAddressNotDuplicatedExceptTarget(String profileAddress) {
+    if (memberRepository.existsByDetail_Profile_Address(profileAddress)) {
       throw new DuplicatedProfileException("중복된 프로필 주소입니다.");
     }
   }
@@ -54,5 +56,21 @@ public class MemberModifyService implements MemberRegister {
     Member member = memberFinder.find(memberId);
     member.activate();
     return memberRepository.save(member);
+  }
+
+  @Override
+  @Transactional
+  public Member changeDetail(Long memberId, String profileAddress, String introduction) {
+    Member member = memberFinder.find(memberId);
+    validateProfileAddressNotDuplicatedExceptTarget(member, profileAddress);
+    member.changeDetail(profileAddress, introduction);
+    return memberRepository.save(member);
+  }
+
+  private void validateProfileAddressNotDuplicatedExceptTarget(Member target, String profileAddress) {
+    Optional<Member> sameProfileMember = memberRepository.findByDetail_Profile_Address(profileAddress);
+    if (sameProfileMember.isPresent() && !sameProfileMember.get().equals(target)) {
+      throw new DuplicatedProfileException("중복된 프로필 주소입니다.");
+    }
   }
 }

@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Accessors;
+import org.springframework.lang.Nullable;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -42,9 +43,13 @@ public class MemberDetail {
     deactivatedAt = LocalDateTime.now();
   }
 
-  void changeProfileAddressAndIntroduction(String profileAddress, String introduction) {
-    this.profile = new Profile(profileAddress);
-    this.introduction = introduction;
+  void changeProfileAddressAndIntroduction(@Nullable String profileAddress, @Nullable String introduction) {
+    if (profileAddress != null && !profileAddress.isBlank()) {
+      this.profile = new Profile(profileAddress);
+    }
+    if (introduction != null && !introduction.isBlank()) {
+      this.introduction = introduction;
+    }
   }
 
   @Override
