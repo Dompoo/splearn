@@ -42,9 +42,6 @@ dependencies {
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
 
-    // hash
-    implementation("org.springframework.boot:spring-boot-starter-security")
-
     // springboot docker compose
     developmentOnly("org.springframework.boot:spring-boot-docker-compose")
 

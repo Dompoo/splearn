@@ -42,6 +42,11 @@ public class MemberDetail {
     deactivatedAt = LocalDateTime.now();
   }
 
+  void changeProfileAddressAndIntroduction(String profileAddress, String introduction) {
+    this.profile = new Profile(profileAddress);
+    this.introduction = introduction;
+  }
+
   @Override
   public boolean equals(Object obj) {
     if (this == obj) return true;
@@ -54,10 +59,5 @@ public class MemberDetail {
   @Override
   public int hashCode() {
     return getClass().hashCode();
-  }
-
-  public void changeProfileAddressAndIntroduction(String profileAddress, String introduction) {
-    this.profile = new Profile(profileAddress);
-    this.introduction = introduction;
   }
 }
