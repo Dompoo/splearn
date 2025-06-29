@@ -62,6 +62,8 @@ public class Member {
   }
 
   public void changeDetail(String profileAddress, String introduction) {
+    state(status == MemberStatus.ACTIVE, "ACTIVE 상태가 아닙니다.");
+
     detail.changeProfileAddressAndIntroduction(profileAddress, introduction);
   }
 

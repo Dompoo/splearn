@@ -105,14 +105,27 @@ class MemberTest {
     assertThat(member.nickname()).isEqualTo("song");
   }
 
-  @Test
-  void 세부_정보를_변경한다() {
-    var member = MemberFixture.createAny();
+  @Nested
+  class 세부_정보_변경_테스트 {
+    
+    @Test
+    void 세부_정보를_변경한다() {
+      var member = MemberFixture.createAny();
+      member.activate();
 
-    member.changeDetail("newProfileAddr", "newIntroduction");
+      member.changeDetail("newProfileAddr", "newIntroduction");
 
-    assertThat(member.detail().profile().address()).isEqualTo("newProfileAddr");
-    assertThat(member.detail().introduction()).isEqualTo("newIntroduction");
+      assertThat(member.detail().profile().address()).isEqualTo("newProfileAddr");
+      assertThat(member.detail().introduction()).isEqualTo("newIntroduction");
+    }
+
+    @Test
+    void 세부_정보를_변경은_가입_완료_상태에서만_가능하다() {
+      var member = MemberFixture.createAny();
+
+      assertThatThrownBy(() -> member.changeDetail("newProfileAddr", "newIntroduction"))
+          .isInstanceOf(IllegalStateException.class);
+    }
   }
 
   @Test
