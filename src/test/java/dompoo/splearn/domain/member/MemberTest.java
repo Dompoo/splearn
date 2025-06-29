@@ -26,7 +26,7 @@ class MemberTest {
     @ParameterizedTest
     @ValueSource(strings = {"wrong@email", "wrong.com", "wrong"})
     void 올바르지_않은_이메일_형식이면_예외가_발생한다(String invalidEmailValue) {
-      assertThatThrownBy(() -> Member.create(invalidEmailValue, "dompoo", "secret"))
+      assertThatThrownBy(() -> Member.create(invalidEmailValue, "dompoo", "secret", "profile", "introduction"))
           .isInstanceOf(IllegalArgumentException.class);
     }
   }

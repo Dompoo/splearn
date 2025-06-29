@@ -16,7 +16,7 @@ class MemberRegisterTest extends IntegrationTest {
 
   @Test
   void 멤버를_등록한다() {
-    var savedMember = memberRegister.register("dompoo@email.com", "dompoo", "secret");
+    var savedMember = memberRegister.register("dompoo@email.com", "dompoo", "secret", "profile", "introduction");
 
     assertThat(savedMember.id()).isNotNull();
     assertThat(savedMember.status()).isEqualTo(MemberStatus.PENDING);
@@ -24,21 +24,21 @@ class MemberRegisterTest extends IntegrationTest {
 
   @Test
   void 존재하는_이메일로_멤버를_등록하면_예외가_발생한다() {
-    memberRegister.register("same@email.com", "dompoo", "secret");
+    memberRegister.register("same@email.com", "dompoo", "secret", "profile", "introduction");
 
-    assertThatThrownBy(() -> memberRegister.register("same@email.com", "dompoo", "secret"))
+    assertThatThrownBy(() -> memberRegister.register("same@email.com", "dompoo", "secret", "profile", "introduction"))
         .isInstanceOf(DuplicatedEmailException.class);
   }
 
   @Test
   void 닉네임이_비어있으면_예외가_발생한다() {
-    assertThatThrownBy(() -> memberRegister.register("dompoo@email.com", "  ", "secret"))
+    assertThatThrownBy(() -> memberRegister.register("dompoo@email.com", "  ", "secret", "profile", "introduction"))
         .isInstanceOf(ConstraintViolationException.class);
   }
 
   @Test
   void 멤버를_activate_한다() {
-    var member = memberRegister.register("dompoo@email.com", "dompoo", "secret");
+    var member = memberRegister.register("dompoo@email.com", "dompoo", "secret", "profile", "introduction");
     em.flush();
     em.clear();
 

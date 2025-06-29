@@ -15,7 +15,7 @@ class MemberFinderTest extends IntegrationTest {
 
   @Test
   void 멤버를_조회한다() {
-    var member = memberRegister.register("dompoo@email.com", "dompoo", "secret");
+    var member = memberRegister.register("dompoo@email.com", "dompoo", "secret", "profile", "introduction");
     em.flush();
     em.clear();
 
@@ -26,7 +26,7 @@ class MemberFinderTest extends IntegrationTest {
 
   @Test
   void 존재하지_않는_멤버를_조회하면_예외가_발생한다() {
-    var member = memberRegister.register("dompoo@email.com", "dompoo", "secret");
+    var member = memberRegister.register("dompoo@email.com", "dompoo", "secret", "profile", "introduction");
     em.flush();
     em.clear();
 
