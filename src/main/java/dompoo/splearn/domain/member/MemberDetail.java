@@ -17,7 +17,7 @@ import static org.springframework.util.Assert.state;
 @ToString
 public class MemberDetail {
 
-  private Long id;
+  private final Long id = null;
   private Profile profile;
   private String introduction;
   private LocalDateTime createdAt;

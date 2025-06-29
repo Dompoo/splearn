@@ -16,7 +16,7 @@ import static org.springframework.util.Assert.state;
 @ToString
 public class Member {
 
-  private Long id;
+  private final Long id = null;
   private Email email;
   private String nickname;
   private Password password;
