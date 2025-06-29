@@ -5,6 +5,7 @@ import dompoo.splearn.application.member.provided.MemberRegister;
 import dompoo.splearn.application.member.required.EmailSender;
 import dompoo.splearn.application.member.required.MemberRepository;
 import dompoo.splearn.domain.member.DuplicatedEmailException;
+import dompoo.splearn.domain.member.DuplicatedProfileException;
 import dompoo.splearn.domain.member.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,12 +23,29 @@ public class MemberModifyService implements MemberRegister {
 
   @Override
   @Transactional
-  public Member register(String email, String nickname, String rawPassword, String profile, String introduction) {
+  public Member register(String email, String nickname, String rawPassword, String profileAddress, String introduction) {
     validateEmailNotDuplicated(email);
-    Member member = Member.create(email, nickname, rawPassword, profile, introduction);
+    validateProfileAddressNotDuplicated(profileAddress);
+    Member member = Member.create(email, nickname, rawPassword, profileAddress, introduction);
     Member savedMember = memberRepository.save(member);
     sendWelcomeEmail(member);
     return savedMember;
+  }
+
+  private void validateProfileAddressNotDuplicated(String profileAddress) {
+    if (memberRepository.existsByDetailProfile_Address(profileAddress)) {
+      throw new DuplicatedProfileException("중복된 프로필 주소입니다.");
+    }
+  }
+
+  private void validateEmailNotDuplicated(String email) {
+    if (memberRepository.existsByEmail_Address(email)) {
+      throw new DuplicatedEmailException("중복된 이메일 주소입니다.");
+    }
+  }
+
+  private void sendWelcomeEmail(Member member) {
+    emailSender.send(member.email(), "등록을 완료해주세요.", "아래 링크를 클릭해서 등록을 완료해주세요.");
   }
 
   @Override
@@ -36,15 +54,5 @@ public class MemberModifyService implements MemberRegister {
     Member member = memberFinder.find(memberId);
     member.activate();
     return memberRepository.save(member);
-  }
-
-  private void validateEmailNotDuplicated(String email) {
-    if (memberRepository.existsByEmail_Address(email)) {
-      throw new DuplicatedEmailException("중복된 이메일입니다.");
-    }
-  }
-
-  private void sendWelcomeEmail(Member member) {
-    emailSender.send(member.email(), "등록을 완료해주세요.", "아래 링크를 클릭해서 등록을 완료해주세요.");
   }
 }

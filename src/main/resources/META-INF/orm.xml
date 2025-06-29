@@ -38,6 +38,11 @@
     </entity>
 
     <entity class="dompoo.splearn.domain.member.MemberDetail">
+        <table>
+            <unique-constraint name="UK_MEMBER_DETAIL_PROFILE">
+                <column-name>profile</column-name>
+            </unique-constraint>
+        </table>
         <attributes>
             <id name="id">
                 <generated-value strategy="IDENTITY"/>

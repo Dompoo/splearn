@@ -31,10 +31,10 @@ public class Member {
     this.detail = memberDetail;
   }
 
-  public static Member create(String emailValue, String nickname, String rawPassword, String profile, String introduction) {
-    Email email = new Email(emailValue);
+  public static Member create(String emailAddress, String nickname, String rawPassword, String profileAddress, String introduction) {
+    Email email = new Email(emailAddress);
     Password password = Password.encode(rawPassword);
-    MemberDetail detail = new MemberDetail(profile, introduction);
+    MemberDetail detail = new MemberDetail(profileAddress, introduction);
 
     return new Member(email, nickname, password, detail);
   }
