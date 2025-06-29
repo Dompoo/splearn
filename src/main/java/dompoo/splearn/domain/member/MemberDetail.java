@@ -24,19 +24,19 @@ public class MemberDetail {
   private LocalDateTime activatedAt;
   private LocalDateTime deactivatedAt;
 
-  public MemberDetail(String profile, String introduction) {
+  MemberDetail(String profile, String introduction) {
     this.profile = profile;
     this.introduction = introduction;
     this.createdAt = LocalDateTime.now();
   }
 
-  public void initActivatedTimeToNow() {
+  void initActivatedTimeToNow() {
     state(activatedAt == null, "activatedAt은 null 이어야 합니다.");
 
     activatedAt = LocalDateTime.now();
   }
 
-  public void initDeactivatedTimeToNow() {
+  void initDeactivatedTimeToNow() {
     state(deactivatedAt == null, "deactivatedAt은 null 이어야 합니다.");
 
     deactivatedAt = LocalDateTime.now();
