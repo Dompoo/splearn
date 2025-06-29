@@ -8,7 +8,7 @@
     <access>FIELD</access>
 
     <entity class="dompoo.splearn.domain.member.Member">
-        <table name="MEMBER">
+        <table>
             <unique-constraint name="UK_MEMBER_EMAIL">
                 <column-name>email</column-name>
             </unique-constraint>
@@ -24,8 +24,34 @@
                 <column nullable="false"/>
                 <enumerated>STRING</enumerated>
             </basic>
+            <one-to-one name="detail" fetch="LAZY">
+                <cascade>
+                    <cascade-all/>
+                </cascade>
+            </one-to-one>
             <embedded name="email"/>
             <embedded name="password"/>
+        </attributes>
+    </entity>
+
+    <entity class="dompoo.splearn.domain.member.MemberDetail">
+        <attributes>
+            <id name="id">
+                <generated-value strategy="IDENTITY"/>
+            </id>
+            <basic name="profile">
+                <column nullable="false"/>
+            </basic>
+            <basic name="introduction">
+                <column nullable="false"/>
+            </basic>
+            <basic name="createdAt">
+                <column nullable="false"/>
+            </basic>
+            <basic name="activatedAt">
+            </basic>
+            <basic name="deactivatedAt">
+            </basic>
         </attributes>
     </entity>
 
