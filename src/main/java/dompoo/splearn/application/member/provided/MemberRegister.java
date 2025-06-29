@@ -11,7 +11,7 @@ public interface MemberRegister {
       @NotBlank @Email String email,
       @NotBlank String nickname,
       @NotBlank String rawPassword,
-      @NotBlank String profile,
+      @NotBlank String profileAddress,
       @NotBlank String introduction
   );
 

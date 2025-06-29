@@ -71,6 +71,10 @@ public class Member {
     this.password = Password.encode(newRawPassword);
   }
 
+  public String emailAddress() {
+    return this.email.address();
+  }
+
   public String profileAddress() {
     return this.detail.profile().address();
   }
