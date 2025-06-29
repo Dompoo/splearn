@@ -1,6 +1,6 @@
 package dompoo.splearn.adapter;
 
-import dompoo.splearn.application.required.EmailSender;
+import dompoo.splearn.application.member.required.EmailSender;
 import dompoo.splearn.domain.member.Email;
 import org.springframework.context.annotation.Fallback;
 import org.springframework.stereotype.Component;

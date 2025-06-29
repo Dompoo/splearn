@@ -1,4 +1,4 @@
-package dompoo.splearn.application.required;
+package dompoo.splearn.application.member.required;
 
 import dompoo.splearn.test_util.MemberFixture;
 import dompoo.splearn.test_util.PersistenceTest;

@@ -1,4 +1,4 @@
-package dompoo.splearn.application.provided;
+package dompoo.splearn.application.member.provided;
 
 import dompoo.splearn.domain.member.Member;
 import org.springframework.lang.NonNull;

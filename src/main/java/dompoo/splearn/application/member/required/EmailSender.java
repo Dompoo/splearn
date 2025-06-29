@@ -1,4 +1,4 @@
-package dompoo.splearn.application.required;
+package dompoo.splearn.application.member.required;
 
 import dompoo.splearn.domain.member.Email;
 

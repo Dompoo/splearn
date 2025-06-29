@@ -1,4 +1,4 @@
-package dompoo.splearn.application.provided;
+package dompoo.splearn.application.member.provided;
 
 import dompoo.splearn.test_util.IntegrationTest;
 import org.junit.jupiter.api.Test;

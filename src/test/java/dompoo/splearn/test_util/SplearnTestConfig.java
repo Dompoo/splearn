@@ -1,6 +1,6 @@
 package dompoo.splearn.test_util;
 
-import dompoo.splearn.application.required.EmailSender;
+import dompoo.splearn.application.member.required.EmailSender;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 

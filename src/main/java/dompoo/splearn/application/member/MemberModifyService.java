@@ -1,9 +1,9 @@
-package dompoo.splearn.application;
+package dompoo.splearn.application.member;
 
-import dompoo.splearn.application.provided.MemberFinder;
-import dompoo.splearn.application.provided.MemberRegister;
-import dompoo.splearn.application.required.EmailSender;
-import dompoo.splearn.application.required.MemberRepository;
+import dompoo.splearn.application.member.provided.MemberFinder;
+import dompoo.splearn.application.member.provided.MemberRegister;
+import dompoo.splearn.application.member.required.EmailSender;
+import dompoo.splearn.application.member.required.MemberRepository;
 import dompoo.splearn.domain.member.DuplicatedEmailException;
 import dompoo.splearn.domain.member.Member;
 import lombok.RequiredArgsConstructor;
