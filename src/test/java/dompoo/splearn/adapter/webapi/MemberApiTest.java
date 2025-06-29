@@ -2,24 +2,27 @@ package dompoo.splearn.adapter.webapi;
 
 import dompoo.splearn.adapter.webapi.dto.MemberRegisterRequest;
 import dompoo.splearn.adapter.webapi.dto.MemberRegisterResponse;
-import dompoo.splearn.application.member.provided.MemberRegister;
-import dompoo.splearn.test_util.MemberFixture;
+import dompoo.splearn.application.member.required.MemberRepository;
+import dompoo.splearn.domain.member.Member;
+import dompoo.splearn.domain.member.MemberStatus;
 import dompoo.splearn.test_util.WebApiTest;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.http.ProblemDetail;
+
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 class MemberApiTest extends WebApiTest {
 
-  @MockitoBean
-  MemberRegister memberRegister;
+  @Autowired
+  MemberRepository memberRepository;
 
   @Test
-  void 회원_등록_API_테스트() throws Exception {
+  void 회원을_등록한다() throws Exception {
     var request = new MemberRegisterRequest(
         "dompoo@email.com",
         "dompoo",
@@ -27,9 +30,6 @@ class MemberApiTest extends WebApiTest {
         "profile",
         "introduction"
     );
-    var mockMember = MemberFixture.create(1L, "dompoo@email.com");
-    when(memberRegister.register(anyString(), anyString(), anyString(), anyString(), anyString()))
-        .thenReturn(mockMember);
 
     var response = mvc.post()
         .uri("/api/members")
@@ -38,13 +38,47 @@ class MemberApiTest extends WebApiTest {
         .exchange();
 
     assertThat(response)
+        .apply(print())
         .hasStatus(200)
         .hasContentType(MediaType.APPLICATION_JSON)
         .bodyJson()
         .convertTo(MemberRegisterResponse.class)
         .satisfies(resp -> {
-          assertThat(resp.memberId()).isEqualTo(1L);
+          assertThat(resp.memberId()).isNotNull();
           assertThat(resp.emailAddress()).isEqualTo("dompoo@email.com");
+          Optional<Member> findMember = memberRepository.findById(resp.memberId());
+          assertThat(findMember).isPresent();
+          assertThat(findMember.get().status()).isEqualTo(MemberStatus.PENDING);
+        });
+  }
+
+  @Test
+  void 중복된_이메일로_등록한다() throws Exception {
+    insertMemberOf("dompoo@email.com");
+
+    var request = new MemberRegisterRequest(
+        "dompoo@email.com",
+        "dompoo",
+        "secret",
+        "profile",
+        "introduction"
+    );
+
+    var response = mvc.post()
+        .uri("/api/members")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(objectMapper.writeValueAsString(request))
+        .exchange();
+
+    assertThat(response)
+        .apply(print())
+        .hasStatus(409)
+        .hasContentType(MediaType.APPLICATION_PROBLEM_JSON)
+        .bodyJson()
+        .convertTo(ProblemDetail.class)
+        .satisfies(resp -> {
+          assertThat(resp.getStatus()).isEqualTo(409);
+          assertThat(resp.getDetail()).isEqualTo("중복된 이메일 주소입니다.");
         });
   }
 }
