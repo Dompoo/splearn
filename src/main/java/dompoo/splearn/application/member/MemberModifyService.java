@@ -35,13 +35,13 @@ public class MemberModifyService implements MemberRegister {
   }
 
   private void validateProfileAddressNotDuplicatedExceptTarget(String profileAddress) {
-    if (memberRepository.existsByDetail_Profile_Address(profileAddress)) {
+    if (memberRepository.existsByDetailProfileAddress(profileAddress)) {
       throw new DuplicatedProfileException("중복된 프로필 주소입니다.");
     }
   }
 
   private void validateEmailNotDuplicated(String email) {
-    if (memberRepository.existsByEmail_Address(email)) {
+    if (memberRepository.existsByEmailAddress(email)) {
       throw new DuplicatedEmailException("중복된 이메일 주소입니다.");
     }
   }
@@ -68,7 +68,7 @@ public class MemberModifyService implements MemberRegister {
   }
 
   private void validateProfileAddressNotDuplicatedExceptTarget(Member target, String profileAddress) {
-    Optional<Member> sameProfileMember = memberRepository.findByDetail_Profile_Address(profileAddress);
+    Optional<Member> sameProfileMember = memberRepository.findByDetailProfileAddress(profileAddress);
     if (sameProfileMember.isPresent() && !sameProfileMember.get().equals(target)) {
       throw new DuplicatedProfileException("중복된 프로필 주소입니다.");
     }

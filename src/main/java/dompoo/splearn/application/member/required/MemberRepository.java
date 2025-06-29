@@ -11,9 +11,9 @@ public interface MemberRepository extends Repository<Member, Long> {
 
   Optional<Member> findById(Long memberId);
 
-  boolean existsByEmail_Address(String emailAddress);
+  boolean existsByEmailAddress(String emailAddress);
 
-  boolean existsByDetail_Profile_Address(String emailAddress);
+  boolean existsByDetailProfileAddress(String profileAddress);
 
-  Optional<Member> findByDetail_Profile_Address(String profileAddress);
+  Optional<Member> findByDetailProfileAddress(String profileAddress);
 }
