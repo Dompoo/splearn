@@ -55,4 +55,9 @@ public class MemberDetail {
   public int hashCode() {
     return getClass().hashCode();
   }
+
+  public void changeProfileAddressAndIntroduction(String profileAddress, String introduction) {
+    this.profile = new Profile(profileAddress);
+    this.introduction = introduction;
+  }
 }

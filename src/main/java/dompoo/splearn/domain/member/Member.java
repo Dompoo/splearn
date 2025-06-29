@@ -61,6 +61,10 @@ public class Member {
     this.nickname = newNickname;
   }
 
+  public void changeDetail(String profileAddress, String introduction) {
+    detail.changeProfileAddressAndIntroduction(profileAddress, introduction);
+  }
+
   public void changePassword(String newRawPassword) {
     this.password = Password.encode(newRawPassword);
   }

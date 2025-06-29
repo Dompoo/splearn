@@ -10,6 +10,6 @@ public record Profile(
   private static final Pattern PROFILE_ADDRESS_PATTERN = Pattern.compile("^[a-zA-Z0-9]{1,15}$");
 
   public Profile {
-    isTrue(PROFILE_ADDRESS_PATTERN.matcher(address).matches(), "올바르지 않은 이메일 형식입니다.");
+    isTrue(PROFILE_ADDRESS_PATTERN.matcher(address).matches(), "올바르지 않은 프로필 주소 형식입니다.");
   }
 }

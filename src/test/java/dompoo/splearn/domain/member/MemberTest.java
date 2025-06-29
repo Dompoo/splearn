@@ -98,12 +98,21 @@ class MemberTest {
   @Test
   void 닉네임을_변경한다() {
     var member = MemberFixture.createAny();
-
     assertThat(member.nickname()).isEqualTo("dompoo");
 
     member.changeNickname("song");
 
     assertThat(member.nickname()).isEqualTo("song");
+  }
+
+  @Test
+  void 세부_정보를_변경한다() {
+    var member = MemberFixture.createAny();
+
+    member.changeDetail("newProfileAddr", "newIntroduction");
+
+    assertThat(member.detail().profile().address()).isEqualTo("newProfileAddr");
+    assertThat(member.detail().introduction()).isEqualTo("newIntroduction");
   }
 
   @Test
