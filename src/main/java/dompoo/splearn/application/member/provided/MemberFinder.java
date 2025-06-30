@@ -1,9 +1,9 @@
 package dompoo.splearn.application.member.provided;
 
 import dompoo.splearn.domain.member.Member;
-import org.springframework.lang.NonNull;
+import jakarta.validation.constraints.NotNull;
 
 public interface MemberFinder {
 
-  Member find(@NonNull Long memberId);
+  Member find(@NotNull Long memberId);
 }

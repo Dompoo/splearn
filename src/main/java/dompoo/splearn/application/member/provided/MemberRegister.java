@@ -3,7 +3,7 @@ package dompoo.splearn.application.member.provided;
 import dompoo.splearn.domain.member.Member;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import org.springframework.lang.NonNull;
+import jakarta.validation.constraints.NotNull;
 
 public interface MemberRegister {
 
@@ -15,10 +15,10 @@ public interface MemberRegister {
       @NotBlank String introduction
   );
 
-  Member activate(@NonNull Long memberId);
+  Member activate(@NotNull Long memberId);
 
   Member changeDetail(
-      @NonNull Long memberId,
+      @NotNull Long memberId,
       String profileAddress,
       String introduction
   );
