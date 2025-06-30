@@ -48,6 +48,9 @@ dependencies {
     // test
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+    // archunit
+    testImplementation("com.tngtech.archunit:archunit-junit5:1.4.1")
 }
 
 tasks.named("check") {

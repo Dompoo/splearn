@@ -107,7 +107,7 @@ class MemberTest {
 
   @Nested
   class 세부_정보_변경_테스트 {
-    
+
     @Test
     void 세부_정보를_변경한다() {
       var member = MemberFixture.createAny();
