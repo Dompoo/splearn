@@ -1,5 +1,6 @@
 package dompoo.splearn.domain.member;
 
+import dompoo.splearn.domain.share.Id;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,13 +13,13 @@ import java.util.Objects;
 
 import static org.springframework.util.Assert.state;
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
 @Getter
 @Accessors(fluent = true)
 @ToString
 public class MemberDetail {
 
-  private final Long id = null;
+  private final Id id;
   private Profile profile;
   private String introduction;
   private LocalDateTime createdAt;
@@ -26,6 +27,7 @@ public class MemberDetail {
   private LocalDateTime deactivatedAt;
 
   MemberDetail(String profileAddress, String introduction) {
+    this.id = Id.generate("test", "memberDetail");
     this.profile = new Profile(profileAddress);
     this.introduction = introduction;
     this.createdAt = LocalDateTime.now();

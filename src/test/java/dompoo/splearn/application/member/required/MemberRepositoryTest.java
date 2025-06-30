@@ -2,10 +2,10 @@ package dompoo.splearn.application.member.required;
 
 import dompoo.splearn.test_util.MemberFixture;
 import dompoo.splearn.test_util.PersistenceTest;
+import org.hibernate.exception.ConstraintViolationException;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -46,11 +46,11 @@ class MemberRepositoryTest extends PersistenceTest {
     void 멤버를_저장할_때_이메일이_중복되면_예외가_발생한다() {
       var member1 = MemberFixture.createAny();
       var member2 = MemberFixture.createAny();
-
       memberRepository.save(member1);
+      memberRepository.save(member2);
 
-      assertThatThrownBy(() -> memberRepository.save(member2))
-          .isInstanceOf(DataIntegrityViolationException.class);
+      assertThatThrownBy(() -> em.flush())
+          .isInstanceOf(ConstraintViolationException.class);
     }
   }
 }

@@ -5,6 +5,7 @@ import dompoo.splearn.adapter.webapi.dto.MemberRegisterResponse;
 import dompoo.splearn.application.member.required.MemberRepository;
 import dompoo.splearn.domain.member.Member;
 import dompoo.splearn.domain.member.MemberStatus;
+import dompoo.splearn.domain.share.Id;
 import dompoo.splearn.test_util.WebApiTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,7 @@ class MemberApiTest extends WebApiTest {
         .satisfies(resp -> {
           assertThat(resp.memberId()).isNotNull();
           assertThat(resp.emailAddress()).isEqualTo("dompoo@email.com");
-          Optional<Member> findMember = memberRepository.findById(resp.memberId());
+          Optional<Member> findMember = memberRepository.findById(new Id(resp.memberId()));
           assertThat(findMember).isPresent();
           assertThat(findMember.get().status()).isEqualTo(MemberStatus.PENDING);
         });

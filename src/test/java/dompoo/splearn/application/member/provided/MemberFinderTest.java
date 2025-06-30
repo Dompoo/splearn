@@ -19,7 +19,7 @@ class MemberFinderTest extends IntegrationTest {
     em.flush();
     em.clear();
 
-    var findMember = memberFinder.find(member.id());
+    var findMember = memberFinder.find(member.idValue());
 
     assertThat(findMember.id()).isEqualTo(member.id());
   }
@@ -30,7 +30,7 @@ class MemberFinderTest extends IntegrationTest {
     em.flush();
     em.clear();
 
-    assertThatThrownBy(() -> memberFinder.find(member.id() + 1))
+    assertThatThrownBy(() -> memberFinder.find("invalidMemberId"))
         .isInstanceOf(IllegalArgumentException.class);
   }
 }

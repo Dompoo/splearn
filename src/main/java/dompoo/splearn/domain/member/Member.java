@@ -1,5 +1,6 @@
 package dompoo.splearn.domain.member;
 
+import dompoo.splearn.domain.share.Id;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,13 +11,13 @@ import java.util.Objects;
 
 import static org.springframework.util.Assert.state;
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
 @Getter
 @Accessors(fluent = true)
 @ToString
 public class Member {
 
-  private final Long id = null;
+  private final Id id;
   private Email email;
   private String nickname;
   private Password password;
@@ -24,6 +25,7 @@ public class Member {
   private MemberDetail detail;
 
   private Member(Email email, String nickname, Password password, MemberDetail memberDetail) {
+    this.id = Id.generate("test", "member");
     this.email = email;
     this.nickname = nickname;
     this.password = password;
@@ -81,6 +83,10 @@ public class Member {
 
   public String introduction() {
     return this.detail.introduction();
+  }
+
+  public String idValue() {
+    return this.id.value();
   }
 
   @Override

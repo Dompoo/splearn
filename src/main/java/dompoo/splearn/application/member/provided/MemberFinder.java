@@ -5,5 +5,5 @@ import jakarta.validation.constraints.NotNull;
 
 public interface MemberFinder {
 
-  Member find(@NotNull Long memberId);
+  Member find(@NotNull String memberId);
 }

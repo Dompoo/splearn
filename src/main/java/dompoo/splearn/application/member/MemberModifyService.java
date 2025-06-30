@@ -52,7 +52,7 @@ public class MemberModifyService implements MemberRegister {
 
   @Override
   @Transactional
-  public Member activate(Long memberId) {
+  public Member activate(String memberId) {
     Member member = memberFinder.find(memberId);
     member.activate();
     return memberRepository.save(member);
@@ -60,7 +60,7 @@ public class MemberModifyService implements MemberRegister {
 
   @Override
   @Transactional
-  public Member changeDetail(Long memberId, String profileAddress, String introduction) {
+  public Member changeDetail(String memberId, String profileAddress, String introduction) {
     Member member = memberFinder.find(memberId);
     validateProfileAddressNotDuplicatedExceptTarget(member, profileAddress);
     member.changeDetail(profileAddress, introduction);

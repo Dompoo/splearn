@@ -15,10 +15,10 @@ public interface MemberRegister {
       @NotBlank String introduction
   );
 
-  Member activate(@NotNull Long memberId);
+  Member activate(@NotNull String memberId);
 
   Member changeDetail(
-      @NotNull Long memberId,
+      @NotNull String memberId,
       String profileAddress,
       String introduction
   );

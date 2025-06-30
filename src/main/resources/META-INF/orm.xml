@@ -17,9 +17,8 @@
             </unique-constraint>
         </table>
         <attributes>
-            <id name="id">
-                <generated-value strategy="IDENTITY"/>
-            </id>
+            <embedded-id name="id">
+            </embedded-id>
             <basic name="nickname">
                 <column length="50" nullable="false"/>
             </basic>
@@ -44,9 +43,8 @@
             </unique-constraint>
         </table>
         <attributes>
-            <id name="id">
-                <generated-value strategy="IDENTITY"/>
-            </id>
+            <embedded-id name="id">
+            </embedded-id>
             <basic name="introduction">
                 <column nullable="false"/>
             </basic>
@@ -60,6 +58,14 @@
             <embedded name="profile"/>
         </attributes>
     </entity>
+
+    <embeddable class="dompoo.splearn.domain.share.Id">
+        <attributes>
+            <basic name="value">
+                <column name="id" nullable="false"/>
+            </basic>
+        </attributes>
+    </embeddable>
 
     <embeddable class="dompoo.splearn.domain.member.Email">
         <attributes>

@@ -44,7 +44,7 @@ class MemberRegisterTest extends IntegrationTest {
     em.flush();
     em.clear();
 
-    var activatedMember = memberRegister.activate(member.id());
+    var activatedMember = memberRegister.activate(member.idValue());
 
     assertThat(activatedMember.status()).isEqualTo(MemberStatus.ACTIVE);
   }
@@ -55,11 +55,11 @@ class MemberRegisterTest extends IntegrationTest {
     @Test
     void 멤버의_상세_정보를_수정한다() {
       var member = memberRegister.register("dompoo@email.com", "dompoo", "secret", "profile", "introduction");
-      memberRegister.activate(member.id());
+      memberRegister.activate(member.idValue());
       em.flush();
       em.clear();
 
-      var changedMember = memberRegister.changeDetail(member.id(), "newProfile", "newIntroduction");
+      var changedMember = memberRegister.changeDetail(member.idValue(), "newProfile", "newIntroduction");
 
       assertThat(changedMember.profileAddress()).isEqualTo("newProfile");
       assertThat(changedMember.introduction()).isEqualTo("newIntroduction");
@@ -68,11 +68,11 @@ class MemberRegisterTest extends IntegrationTest {
     @Test
     void 수정_정보가_지정되지_않으면_변경되지_않는다() {
       var member = memberRegister.register("dompoo@email.com", "dompoo", "secret", "profile", "introduction");
-      memberRegister.activate(member.id());
+      memberRegister.activate(member.idValue());
       em.flush();
       em.clear();
 
-      var changedMember = memberRegister.changeDetail(member.id(), null, "  ");
+      var changedMember = memberRegister.changeDetail(member.idValue(), null, "  ");
 
       assertThat(changedMember.profileAddress()).isEqualTo("profile");
       assertThat(changedMember.introduction()).isEqualTo("introduction");
@@ -82,11 +82,11 @@ class MemberRegisterTest extends IntegrationTest {
     void 이미_등록된_프로필_주소이면_예외가_발생한다() {
       var member = memberRegister.register("dompoo@email.com", "dompoo", "secret", "profile", "introduction");
       memberRegister.register("song@email.com", "song", "secret", "songProfile", "introduction");
-      memberRegister.activate(member.id());
+      memberRegister.activate(member.idValue());
       em.flush();
       em.clear();
 
-      assertThatThrownBy(() -> memberRegister.changeDetail(member.id(), "songProfile", ""))
+      assertThatThrownBy(() -> memberRegister.changeDetail(member.idValue(), "songProfile", ""))
           .isInstanceOf(DuplicatedProfileException.class);
     }
   }
